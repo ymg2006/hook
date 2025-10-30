@@ -24,11 +24,6 @@ static void php_hook_init_globals(zend_hook_globals *g)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_hook_world, 0, 0, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_hook_repeat, 0, 1, IS_STRING, 0)
-    ZEND_ARG_TYPE_INFO(0, name, IS_STRING, 0)
-    ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, times, IS_LONG, 0, "1")
-ZEND_END_ARG_INFO()
-
 /* hook_world(): returns "<greeting> from PECL!" */
 PHP_FUNCTION(hook_world)
 {
@@ -44,43 +39,9 @@ PHP_FUNCTION(hook_world)
     RETURN_STR(result);
 }
 
-/* hook_repeat(string $name, int $times = 1) */
-PHP_FUNCTION(hook_repeat)
-{
-    zend_string *name;
-    zend_long times = 1;
-
-    ZEND_PARSE_PARAMETERS_START(1, 2)
-        Z_PARAM_STR(name)
-        Z_PARAM_OPTIONAL
-        Z_PARAM_LONG(times)
-    ZEND_PARSE_PARAMETERS_END();
-
-    if (times < 1) times = 1;
-
-    const char *greet = HOOK_G(greeting) ? HOOK_G(greeting) : "Hello";
-
-    smart_str buf = {0};
-    for (zend_long i = 0; i < times; i++) {
-        smart_str_appends(&buf, greet);
-        smart_str_appends(&buf, ", ");
-        smart_str_append(&buf, name);
-        if (i + 1 < times) {
-            smart_str_appends(&buf, " | ");
-        }
-    }
-    smart_str_0(&buf);
-
-    if (buf.s) {
-        RETURN_STR(buf.s);
-    }
-    RETURN_EMPTY_STRING();
-}
-
 /* Function list */
 static const zend_function_entry hook_functions[] = {
     PHP_FE(hook_world,  arginfo_hook_world)
-    PHP_FE(hook_repeat, arginfo_hook_repeat)
     PHP_FE_END
 };
 
