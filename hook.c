@@ -4,12 +4,13 @@
 
 #include "php.h"
 #include "ext/standard/info.h"
-#include "zend_smart_str.h"
 #include "php_hook.h"
 
 /* INI entries */
 PHP_INI_BEGIN()
-    STD_PHP_INI_ENTRY("hook.greeting", "Hello", PHP_INI_ALL, OnUpdateString, greeting, zend_hook_globals, hook_globals)
+    /* Boolean flag to enable/disable the hook */
+    STD_PHP_INI_BOOLEAN("hook.enable", "1", PHP_INI_ALL,
+        OnUpdateBool, enable, zend_hook_globals, hook_globals)
 PHP_INI_END()
 
 /* Declare the module globals storage */
@@ -17,25 +18,31 @@ ZEND_DECLARE_MODULE_GLOBALS(hook)
 
 static void php_hook_init_globals(zend_hook_globals *g)
 {
-    g->greeting = NULL; /* value comes from INI; default set above */
+    /* default is also set by INI registration; keep a sane baseline */
+    g->enable = 1;
 }
 
-/* arginfo */
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_hook_world, 0, 0, IS_STRING, 0)
+/* arginfo: hook_world(): ?string */
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_hook_world, 0, 0, IS_STRING, 1 /* allow_null */)
 ZEND_END_ARG_INFO()
 
-/* hook_world(): returns "<greeting> from PECL!" */
+/* hook_world(): returns "Hello from PECL!" when enabled; NULL when disabled */
 PHP_FUNCTION(hook_world)
 {
-    const char *greet = HOOK_G(greeting) ? HOOK_G(greeting) : "Hello";
+    if (!HOOK_G(enable)) {
+        RETURN_NULL();
+    }
+
+    const char *greet = "Hello";
     size_t glen = strlen(greet);
     const char *suffix = " from PECL!";
-    size_t len = glen + strlen(suffix);
+    size_t slen = strlen(suffix);
+    size_t len  = glen + slen;
 
     zend_string *result = zend_string_alloc(len, 0);
     memcpy(ZSTR_VAL(result), greet, glen);
-    memcpy(ZSTR_VAL(result) + glen, suffix, strlen(suffix));
-    ZSTR_VAL(result)[len] = '\\0';
+    memcpy(ZSTR_VAL(result) + glen, suffix, slen);
+    ZSTR_VAL(result)[len] = '\0';
     RETURN_STR(result);
 }
 
