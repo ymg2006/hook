@@ -1,0 +1,6 @@
+ARG_ENABLE("hook", "Enable hook support", "no");
+
+if (PHP_HOOK == "yes") {
+    EXTENSION("hook", "hook.c");
+    AC_DEFINE("HAVE_HOOK", 1, "Have hook");
+}
