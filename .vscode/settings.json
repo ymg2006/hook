@@ -1,3 +1,10 @@
 {
     "editor.formatOnSave": false,
+    "files.associations": {
+      "*.erd": "json",
+      "*.vuerd": "json",
+      "php_hook.h": "c",
+      "minhook.h": "c",
+      "windows.h": "c"
+    },
 }

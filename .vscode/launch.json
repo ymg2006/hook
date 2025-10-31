@@ -5,10 +5,9 @@
             "name": "Debug hook Extension",
             "type": "cppvsdbg",
             "request": "launch",
-            "program": "C:/Users/Farid/Documents/VisualStudio2022/Projects/PHP-hook/php-8.4.7/vs17/x64/x64/Release_TS/php.exe",
+            "program": "C:/Users/Farid/Documents/VisualStudio2022/Projects/PHP-hook/php-8.4.7/vs17/x64/x64/Debug_TS/php.exe",
             "args": [
-                "-d enable_dl=1",
-                "-d extension_dir=C:/Users/Farid/Documents/VisualStudio2022/Projects/PHP-hook/php-8.4.7/vs17/x64/x64/Release_TS",
+                "-d extension_dir=C:/Users/Farid/Documents/VisualStudio2022/Projects/PHP-hook/php-8.4.7/vs17/x64/x64/Debug_TS",
                 "-d extension=php_hook.dll",
                 "C:/Users/Farid/Documents/VisualStudio2022/Projects/PHP-hook/php-8.4.7/vs17/x64/ext/hook/test.php"
             ],
@@ -17,7 +16,7 @@
             "environment": [
                 {
                     "name": "PATH",
-                    "value": "C:/Users/Farid/Documents/VisualStudio2022/Projects/PHP-hook/php-8.4.7/vs17/x64/x64/Release_TS;C:/Users/Farid/Documents/VisualStudio2022/Projects/PHP-hook/php-8.4.7/vs17/x64/ext/hook;${env:PATH}"
+                    "value": "C:/Users/Farid/Documents/VisualStudio2022/Projects/PHP-hook/php-8.4.7/vs17/x64/x64/Debug_TS;C:/Users/Farid/Documents/VisualStudio2022/Projects/PHP-hook/php-8.4.7/vs17/x64/ext/hook;${env:PATH}"
                 }
             ],
             "console": "integratedTerminal"

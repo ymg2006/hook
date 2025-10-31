@@ -12,7 +12,7 @@ extern zend_module_entry hook_module_entry;
 
 /* Module globals */
 ZEND_BEGIN_MODULE_GLOBALS(hook)
-    char *greeting;
+    zend_bool enable;
 ZEND_END_MODULE_GLOBALS(hook)
 
 ZEND_EXTERN_MODULE_GLOBALS(hook)

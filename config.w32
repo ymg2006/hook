@@ -1,6 +1,15 @@
 ARG_ENABLE("hook", "Enable hook support", "no");
 
 if (PHP_HOOK == "yes") {
-    EXTENSION("hook", "hook.c");
+    EXTENSION("hook", "hook.c " +
+                     "minhook\\src\\buffer.c " +
+                     "minhook\\src\\hook.c " +
+                     "minhook\\src\\trampoline.c " +
+                     "minhook\\src\\hde\\hde32.c " +
+                     "minhook\\src\\hde\\hde64.c");
+
+    /* Use MinHook headers from the include directory */
+    ADD_FLAG("CFLAGS_HOOK", "/I " + configure_module_dirname + "\\minhook\\include");
+
     AC_DEFINE("HAVE_HOOK", 1, "Have hook");
 }
