@@ -5,20 +5,14 @@
             "name": "Debug hook Extension",
             "type": "cppvsdbg",
             "request": "launch",
-            "program": "C:/Users/Farid/Documents/VisualStudio2022/Projects/PHP-hook/php-8.4.7/vs17/x64/x64/Debug_TS/php.exe",
+            "program": "../../x64/Debug_TS/php.exe",
             "args": [
-                "-d extension_dir=C:/Users/Farid/Documents/VisualStudio2022/Projects/PHP-hook/php-8.4.7/vs17/x64/x64/Debug_TS",
+                "-d extension_dir=../Debug_TS",
                 "-d extension=php_hook.dll",
-                "C:/Users/Farid/Documents/VisualStudio2022/Projects/PHP-hook/php-8.4.7/vs17/x64/ext/hook/test.php"
+                "../../ext/hook/test.php"
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
-            "environment": [
-                {
-                    "name": "PATH",
-                    "value": "C:/Users/Farid/Documents/VisualStudio2022/Projects/PHP-hook/php-8.4.7/vs17/x64/x64/Debug_TS;C:/Users/Farid/Documents/VisualStudio2022/Projects/PHP-hook/php-8.4.7/vs17/x64/ext/hook;${env:PATH}"
-                }
-            ],
             "console": "integratedTerminal"
         }
     ]

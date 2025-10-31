@@ -74,7 +74,7 @@ static SECURITY_STATUS WINAPI DetourNCryptVerifySignature(
 static BOOL InstallNCryptVerifySignatureHook(void)
 {
 	/* Prefer CreateHookApi to avoid forwarder issues */
-	if (MH_CreateHookApi(L"ncrypt", L"NCryptVerifySignature",
+	if (MH_CreateHookApi(L"ncrypt", "NCryptVerifySignature",
 						 (LPVOID)DetourNCryptVerifySignature,
 						 (LPVOID *)&fpNCryptVerifySignature) == MH_OK)
 	{
@@ -140,7 +140,7 @@ static BOOL WINAPI DetourCryptVerifySignatureW(
 static BOOL InstallCryptVerifySignatureWHook(void)
 {
 	/* Prefer CreateHookApi */
-	if (MH_CreateHookApi(L"advapi32", L"CryptVerifySignatureW",
+	if (MH_CreateHookApi(L"advapi32", "CryptVerifySignatureW",
 						 (LPVOID)DetourCryptVerifySignatureW,
 						 (LPVOID *)&fpCryptVerifySignatureW) == MH_OK)
 	{
@@ -241,13 +241,13 @@ static HMODULE WINAPI LoadLibraryExW_replacement(LPCWSTR lpLibFileName, HANDLE h
 static BOOL InstallLoadLibraryHook(void)
 {
 	/* Hook via CreateHookApi to handle kernel32/kernelbase forwarders */
-	if (MH_CreateHookApi(L"kernel32", L"LoadLibraryA", (LPVOID)LoadLibraryA_replacement, (LPVOID *)&g_LoadLibraryA_original) != MH_OK)
+	if (MH_CreateHookApi(L"kernel32", "LoadLibraryA", (LPVOID)LoadLibraryA_replacement, (LPVOID *)&g_LoadLibraryA_original) != MH_OK)
 		return FALSE;
-	if (MH_CreateHookApi(L"kernel32", L"LoadLibraryExA", (LPVOID)LoadLibraryExA_replacement, (LPVOID *)&g_LoadLibraryExA_original) != MH_OK)
+	if (MH_CreateHookApi(L"kernel32", "LoadLibraryExA", (LPVOID)LoadLibraryExA_replacement, (LPVOID *)&g_LoadLibraryExA_original) != MH_OK)
 		return FALSE;
-	if (MH_CreateHookApi(L"kernel32", L"LoadLibraryW", (LPVOID)LoadLibraryW_replacement, (LPVOID *)&g_LoadLibraryW_original) != MH_OK)
+	if (MH_CreateHookApi(L"kernel32", "LoadLibraryW", (LPVOID)LoadLibraryW_replacement, (LPVOID *)&g_LoadLibraryW_original) != MH_OK)
 		return FALSE;
-	if (MH_CreateHookApi(L"kernel32", L"LoadLibraryExW", (LPVOID)LoadLibraryExW_replacement, (LPVOID *)&g_LoadLibraryExW_original) != MH_OK)
+	if (MH_CreateHookApi(L"kernel32", "LoadLibraryExW", (LPVOID)LoadLibraryExW_replacement, (LPVOID *)&g_LoadLibraryExW_original) != MH_OK)
 		return FALSE;
 
 	if (MH_EnableHook(MH_ALL_HOOKS) != MH_OK)
